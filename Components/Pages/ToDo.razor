@@ -1,0 +1,154 @@
+﻿@* Using the app Model and Services *@
+@using TodoList.Models;
+@using TodoList.Services;
+
+@page "/todo"
+
+@* Use dependency injection to add a reference to the FileStorageService *@
+@inject FileStorageService FileStorageService;
+
+@rendermode InteractiveServer
+
+<!-- ToDo page -->
+<PageTitle>ToDo - App Page</PageTitle>
+
+<h1>ToDo App</h1>
+<hr />
+
+<!-- ToDo count text changed so it reads better -->
+<h3>@todos.Count(todo => !todo.IsDone) Active ToDos</h3>
+
+<br />
+
+<!-- Many changes have been made to the layout and functionality within the ToDo item list -->
+<!-- ToDo.razor.css file added to provide layout styles while maintaining readability -->
+
+<!-- todo-list class applies a table layout to the unordered list -->
+<ul class="todo-list">
+    <!-- Loop through all todo items stored in the JSON data file -->
+    @foreach (var todo in todos)
+    {
+        <!-- todo-item class applies a table row to each list item -->
+        <li class="todo-item">
+            <!-- todo-checkbox class applies a table cell to the checkbox column in the unordered list -->
+            <div class="todo-checkbox">
+                <!-- Modification to original code to provide data save function on change of checkbox value -->
+                <input type="checkbox" checked="@todo.IsDone" @onchange="(e) => UpdateToDoStatus(todo, e.Value)" />
+            </div>
+            <!-- todo-title class applies a table cell to the Title column in the unordered list -->
+            <div class="todo-title">
+                <!-- Conditional code responds to Edit button action to provide inplace editing when the button is clicked -->
+                @if (todo.IsEditing)
+                {
+                    <!-- Editing so display todo Title in an input box -->
+                    <input @bind="todo.Title" @bind:event="oninput" />
+                }
+                else
+                {
+                    <!-- Not editing so display todo Title as text and apply todo-completed class if appropriate -->
+                    <span class="@(todo.IsDone ? "todo-completed" : "")">@todo.Title</span> <!-- Apply class based on IsDone -->
+                }
+            </div>
+            <!-- todo-edit-button class applies a table cell to the Edit Button column in the unordered list -->
+            <div class="todo-edit-button">
+                <!-- Conditional code responds to Edit button action toSave and Cancel buttons when the Edit button is clicked -->
+                @if (todo.IsEditing)
+                {
+                    <!-- Editing so display Save and Cancel buttons -->
+                    <button @onclick="() => SaveEdit(todo)">Save</button>
+                    <button @onclick="() => CancelEdit(todo)">Cancel</button>
+                }
+                else
+                {
+                    <!-- Not editing so display Edit Button, enabled if the IsDone flag is not set -->
+                    <button @onclick="() => EditToDo(todo)" disabled="@(todo.IsDone)">Edit</button>
+                }
+            </div>
+            <!-- todo-actions class applies a table cell to the Delete button column in the unordered list -->
+            <div class="todo-actions">
+                <!-- Delete button, enabled if the IsDone flag is set -->
+                <button @onclick="@(() => DeleteToDo(todo))" disabled="@(!todo.IsDone)">Delete</button>
+            </div>
+        </li>
+    }
+</ul>
+
+<br />
+<!-- Input box and Save button for adding and saving new todo items -->
+<div class="todo-add-button">
+    <input placeholder="Add New Todo" @bind="newToDo" />&nbsp;&nbsp;
+    <button @onclick="SaveToDo">Save</button>
+</div>
+
+@code {
+    // Page code
+
+    // Declare variables
+    private List<ToDoItem> todos = new List<ToDoItem>();
+    private string? newToDo;
+
+    // Get the current list of todo items from the JSON data file
+    protected override void OnInitialized()
+    {
+        todos = FileStorageService.LoadToDoItems();
+    }
+
+    // Save a new todo item
+    private void SaveToDo()
+    {
+        // Check if the input for newToDo is not null or whitespace
+        if (!string.IsNullOrWhiteSpace(newToDo))
+        {
+            // Add the new item to the list
+            todos.Add(new ToDoItem { Title = newToDo });
+
+            // Save the updated list to storage
+            FileStorageService.SaveToDoItems(todos);
+
+            // Clear the input field
+            newToDo = string.Empty;
+        }
+    }
+
+    // Delete a todo item
+    private void DeleteToDo(ToDoItem todo)
+    {
+        // Remove the item from the list
+        todos.Remove(todo);
+
+        // Save the updated list to storage
+        FileStorageService.SaveToDoItems(todos);
+    }
+
+    // Update the todo items IsDone flag
+    private void UpdateToDoStatus(ToDoItem todo, object? isChecked)
+    {
+        // Update the IsDone status of the ToDoItem based on the checkbox state
+        if (isChecked is bool isCheckedBool)
+        {
+            todo.IsDone = isCheckedBool;
+        }
+
+        // Save the updated list to storage
+        FileStorageService.SaveToDoItems(todos);
+    }
+
+    // Edit the todo items title value
+    private void EditToDo(ToDoItem todo)
+    {
+        todo.IsEditing = true;
+    }
+
+    // Save edited todo item - Save button
+    private void SaveEdit(ToDoItem todo)
+    {
+        todo.IsEditing = false;
+        FileStorageService.SaveToDoItems(todos);
+    }
+
+    // Cancel edited todo item - Cancel button
+    private void CancelEdit(ToDoItem todo)
+    {
+        todo.IsEditing = false;
+    }
+}

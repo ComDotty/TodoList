@@ -1,0 +1,101 @@
+﻿@page "/"
+
+<!-- Home page -->
+<PageTitle>ToDo - Home Page</PageTitle>
+
+<!-- Extensive text added explaining purpose and details of changes made to the app -->
+<h1>Blazor ToDo App Tutorial</h1>
+<hr />
+
+<h3>Welcome to the Blazor ToDo App Tutorial</h3>
+
+<p>
+    This simple app is based on the Microsoft tutorial found 
+    at <a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/build-a-blazor-app?view=aspnetcore-8.0" target="_blank">https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/build-a-blazor-app</a>, 
+    and targets .NET 8.0.
+</p>
+
+<p>
+    Although the original code is helpful in getting started with basic Blazor concepts, it is frustrating that
+    some essential functions are missing, with no guidance or suggestions about how to continue to the next step in Blazor 
+    development. What kind of application allows data input but doesn't suggest a way to save and store it?
+</p>
+
+<p>
+    The tutorial has been improved in order to produce a more professional finished project and incorporate features 
+    that could be considered vital to a production app. The main functional improvement is the addition of a simple local 
+    file storage service to store ToDo items in a JSON file.
+</p>
+
+<p>
+    With the exception of the addition of the Bootstrap Icons library no other third-party libraries have been used to update
+    the app, all the additional functionality has been implemented using standard Blazor code.
+</p>
+
+<p>
+    All changes to the app have been commented within each new or modified file, view the file in your preferred editor for more information.
+</p>
+
+<p>
+    These changes have been made in an effort to encourage developers who are new to Blazor to experiment with the UI and functionality.
+</p>
+
+<p>Modifications to basic tutorial code:</p>
+
+<p><strong>App page changes</strong></p>
+<ul>
+    <li>App.razor - Bootstrap icons stylesheet link added</li>
+</ul>
+
+<p>
+    <strong>Note:</strong> A visual directory of all Bootstrap Icons available with the included library can be found here:
+    <a href="https://icons.getbootstrap.com/#icons" target="_blank">https://icons.getbootstrap.com/#icons</a>
+</p>
+
+<p><strong>MainLayout page changes</strong></p>
+<ul>
+    <li>MainLayout.razor - top row about page link removed</li>
+    <li>MainLayout.razor - top row app title added with css inline style for padding</li>
+</ul>
+
+<p><strong>NavMenu page changes</strong></p>
+<ul>
+    <li>NavMenu.razor - app title changed</li>
+    <li>NavMenu.razor - default links removed</li>
+    <li>NavMenu.razor - About page link added</li>
+    <li>NavMenu.razor - Learn page link added</li>
+    <li>NavMenu.razor - new bi icons added</li>
+</ul>
+
+<p><strong>NavMenu css changes</strong></p>
+<ul>
+    <li>NavMenu.razor.css - default icon classes removed</li>
+    <li>NavMenu.razor.css - bi class modified for font-size and top spacing</li>
+</ul>
+
+<p><strong>Home page changes</strong></p>
+<ul>
+    <li>Home.razor - title updated</li>
+    <li>Home.razor - this list of changes and modifications added</li>
+</ul>
+
+<p><strong>ToDo page changes</strong></p>
+<ul>
+    <li>ToDo.razor - h1 title added</li>
+    <li>ToDo.razor - todo count line changed</li>
+    <li>ToDo.razor - todo list layout changed using CSS (div/table layout)</li>
+    <li>ToDo.razor - todo input placeholder and action button text changed</li>
+    <li>ToDo.razor - todo in-place edit, save and delete functions added</li>
+</ul>
+
+<p><strong>Other changes</strong></p>
+<ul>
+    <li>Local File Storage service created and registered in Program.cs to allow dependency injection</li>
+    <li>Models and Services isolated to seperate folders to enforce best practice standards</li>
+</ul>
+
+<p><strong>Example code clean-up</strong></p>
+<ul>
+    <li>Counter.razor demo page and code removed</li>
+    <li>Weather.razor demo page and code removed</li>
+</ul>

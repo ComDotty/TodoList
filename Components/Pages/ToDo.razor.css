@@ -1,0 +1,90 @@
+﻿/* CSS File for updated Todolist tutorial */
+/* File provides table layout classes for ToDo.razor page list layout */
+
+/* Apply a table layout to the list */
+.todo-list {
+    display: table;
+    width: 100%;
+    border-collapse: collapse; /* Ensures that there are no gaps between cells */
+    margin: 0;
+    padding: 0;
+    list-style-type: none; /* Removes the default bullet points */
+}
+
+/* Apply a table-row layout to each list item */
+.todo-item {
+    display: table-row;
+    border-bottom: 1px solid #ddd; /* Adds a horizontal line between items */
+}
+
+/* Checkbox cell */
+.todo-checkbox {
+    display: table-cell;
+    width: 5%;
+    padding: 8px;
+    vertical-align: middle;
+}
+
+/* Title cell */
+.todo-title {
+    display: table-cell;
+    width: 60%; /* Reduced width to make space for additional buttons */
+    padding: 8px;
+    vertical-align: middle;
+}
+
+/* Add a class for strike-through text */
+.todo-completed {
+    text-decoration: line-through;
+    color: gray; /* Optional: change color to gray for a visual cue */
+}
+
+/* Edit button cell */
+.todo-edit-button {
+    display: table-cell;
+    width: 25%; /* Separate width for edit button */
+    padding: 8px;
+    text-align: center; /* Center align the button */
+    vertical-align: middle;
+}
+
+/* Actions cell */
+.todo-actions {
+    display: table-cell;
+    width: 15%; /* Adjusted width to accommodate delete button */
+    padding: 8px;
+    text-align: right;
+    vertical-align: middle;
+}
+
+    /* Button styling */
+    .todo-actions button,
+    .todo-edit-button button,
+    .todo-add-button button {
+        border-width: 1px;
+        margin-left: 5px; /* Adds space between buttons */
+        width: 75px;
+    }
+
+/* Input styling in edit mode */
+.todo-title input {
+    width: calc(80% - 10px); /* Full width minus padding */
+    padding: 5px;
+    font-size: 1em;
+    margin-right: 5px; /* Space between input and buttons */
+}
+
+/* Responsive design adjustments */
+@media screen and (max-width: 600px) {
+    .todo-title {
+        width: 40%; /* Adjusted width for smaller screens */
+    }
+
+    .todo-edit-button {
+        width: 20%; /* Adjusted width for smaller screens */
+    }
+
+    .todo-actions {
+        width: 35%; /* Adjusted width for smaller screens */
+    }
+}
